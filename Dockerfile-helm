@@ -1,0 +1,14 @@
+FROM alpine
+
+LABEL Author Khoi Nguyen <khoi.nguyen@gmail.com>
+
+ENV HELM_LATEST_VERSION="v2.9.1"
+
+RUN apk add --no-cache --update ca-certificates \
+ && apk add --no-cache curl \
+ && curl -L http://storage.googleapis.com/kubernetes-helm/helm-v2.9.1-linux-amd64.tar.gz -o ./helm-${HELM_LATEST_VERSION}-linux-amd64.tar.gz \
+ && tar -xvf helm-${HELM_LATEST_VERSION}-linux-amd64.tar.gz \
+ && mv linux-amd64/helm /usr/local/bin \
+ && apk del --purge curl \
+ && rm /var/cache/apk/* \
+ && rm -f /helm-${HELM_LATEST_VERSION}-linux-amd64.tar.gz
